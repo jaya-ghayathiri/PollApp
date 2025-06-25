@@ -85,11 +85,28 @@ const updatePoll = async (req, res) => {
     res.status(500).json({ msg: 'Server error' });
   }
 };
+const votePoll = async (req, res) => {
+  try {
+    const { optionId } = req.body;
 
+    const poll = await Poll.findOneAndUpdate(
+      { _id: req.params.id, 'options._id': optionId },
+      { $inc: { 'options.$.votes': 1 } },
+      { new: true }
+    ).populate('createdBy', 'email');
+
+    if (!poll) return res.status(404).json({ msg: 'Poll or option not found' });
+    res.json(poll);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+};
 module.exports = {
   createPoll,
   getAllPolls,
   getPollById,
   deletePoll,
-  updatePoll
+  updatePoll,
+  votePoll
 };
