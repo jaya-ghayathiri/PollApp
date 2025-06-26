@@ -5,6 +5,7 @@ Welcome to the frontend of PollCraft, a modern and minimalistic polling web appl
 
 
 **Purpose:** Enable authenticated users to easily create and manage opinion polls.
+
 **API Integration:** Communicates with the backend RESTful API hosted at http://localhost:8000.
 
 **Features**
